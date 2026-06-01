@@ -1,0 +1,16 @@
+2026-05-05 15:38:55.928598-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "DIRECCION CHARACTER VARYING(25)": "U&'Carrera 50 # 34-22, Bogot\\00e1' (26)"
+Value too long for column "DIRECCION CHARACTER VARYING(25)": "U&'Carrera 50 # 34-22, Bogot\\00e1' (26)"; SQL statement:
+insert into comercio (direccion,estado,fecha_creacion,horario_atencion,nit,nombre_comercio,contacto,id) values (?,?,?,?,?,?,?,default) [22001-240]
+2026-05-05 15:39:26.650041-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "DIRECCION CHARACTER VARYING(25)": "U&'Calle 80 # 45-10, Medell\\00edn' (26)"
+Value too long for column "DIRECCION CHARACTER VARYING(25)": "U&'Calle 80 # 45-10, Medell\\00edn' (26)"; SQL statement:
+insert into comercio (direccion,estado,fecha_creacion,horario_atencion,nit,nombre_comercio,contacto,id) values (?,?,?,?,?,?,?,default) [22001-240]
+2026-05-05 15:39:50.061046-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "DIRECCION CHARACTER VARYING(25)": "'Calle 10  5-30, Bucaramanga' (27)"
+Value too long for column "DIRECCION CHARACTER VARYING(25)": "'Calle 10  5-30, Bucaramanga' (27)"; SQL statement:
+insert into comercio (direccion,estado,fecha_creacion,horario_atencion,nit,nombre_comercio,contacto,id) values (?,?,?,?,?,?,?,default) [22001-240]
+2026-05-05 15:40:19.763056-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valor demasiado largo para la columna "DIRECCION CHARACTER VARYING(25)": "'Calle 10 5-30, Bucaramanga' (26)"
+Value too long for column "DIRECCION CHARACTER VARYING(25)": "'Calle 10 5-30, Bucaramanga' (26)"; SQL statement:
+insert into comercio (direccion,estado,fecha_creacion,horario_atencion,nit,nombre_comercio,contacto,id) values (?,?,?,?,?,?,?,default) [22001-240]

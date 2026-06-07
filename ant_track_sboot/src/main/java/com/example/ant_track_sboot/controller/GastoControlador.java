@@ -20,7 +20,7 @@ import com.example.ant_track_sboot.modelo.Gasto;
 import com.example.ant_track_sboot.servicio.GastoServicio;
 
 
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 @RestController
 @RequestMapping("/anttrackapi/v1/gastos")
 public class GastoControlador {

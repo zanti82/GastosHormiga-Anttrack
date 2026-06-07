@@ -2,8 +2,7 @@
 
 //const URL_BASE = "http://3.134.93.54:8080/anttrackapi/v1";
 const URL_BASE = "https://abc123.ngrok-free.app/anttrackapi/v1";
-
-//actaluzando
+//nueva linea
 
 export let endPoints = {
 

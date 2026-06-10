@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { endPoints } from "../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { clearSession, getUser } from "../helpers/local-storage";
+import { clearSession, getUser, authFetch } from "../helpers/local-storage";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -14,7 +14,9 @@ export default function DashboardPage() {
 
   
   //para revisar que si
-  console.log(activeUser.nombre);
+  console.log(activeUser.correo);
+  console.log(activeUser.id);
+  console.log(activeUser.rol);
 
   //el DTO recobe estos parametros, el userID lo sacamos del localStorage
 
@@ -39,10 +41,10 @@ export default function DashboardPage() {
 
   //PARA LISTAR GASTOS recibe un parametro id para listar al usuario activo
   function getGastos(id) {
-    fetch(`${endPoints.gastosByID}/${id}`) //traemos los gastos del uasuario id
+    authFetch(`${endPoints.gastosByID}/${id}`) //traemos los gastos del uasuario id
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data); //verificar si llega la data
+        console.log("GASTOS DATA:", data); //verificar si llega la data
         setGastos(data);
       })
       .catch((error) => console.log("Error al cargar gastos:", error.message));
@@ -50,7 +52,7 @@ export default function DashboardPage() {
 
   //PARA LISTAR coemrcios
   function getComercios() {
-    fetch(`${endPoints.comercios}`) //traemos los gastos del uasuario id
+    authFetch(`${endPoints.comercios}`) //traemos los gastos del uasuario id
       .then((res) => res.json())
       .then((data) => {
         console.log("comercios", data); //verificar si llega la data
@@ -61,7 +63,7 @@ export default function DashboardPage() {
 
   //PARA LISTAR categorias
   function getCategorias() {
-    fetch(`${endPoints.categorias}`) //traemos los gastos del uasuario id
+    authFetch(`${endPoints.categorias}`) //traemos los gastos del uasuario id
       .then((res) => res.json())
       .then((data) => {
         console.log("categorias", data); //verificar si llega la data
@@ -72,7 +74,7 @@ export default function DashboardPage() {
 
   //PARA LISTAR metod de pago
   function getMetodoPagos() {
-    fetch(`${endPoints.metodoPago}`) //traemos los gastos del uasuario id
+    authFetch(`${endPoints.metodoPago}`) //traemos los gastos del uasuario id
       .then((res) => res.json())
       .then((data) => {
         console.log("metodopago", data); //verificar si llega la data
@@ -147,7 +149,7 @@ export default function DashboardPage() {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await fetch(`${endPoints.gastos}/${id}`, {
+        const res = await authFetch(`${endPoints.gastos}/${id}`, {
           method: "DELETE",
         });
 
@@ -193,7 +195,7 @@ export default function DashboardPage() {
       };
 
       try {
-        const response = await fetch(`${endPoints.gastos}/${gastoEditar.id}`, {
+        const response = await authFetch(`${endPoints.gastos}/${gastoEditar.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(gastoParaEditar),
@@ -248,7 +250,7 @@ export default function DashboardPage() {
       };
 
       try {
-        const response = await fetch(endPoints.gastos, {
+        const response = await authFetch(endPoints.gastos, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(gastoParaEnviar),

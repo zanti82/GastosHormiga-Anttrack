@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { getUser } from "../helpers/local-storage";
+import { authFetch, getUser } from "../helpers/local-storage";
 import { endPoints } from "../services/api";
 
 const COLORS = [
@@ -55,11 +55,11 @@ export default function EstadisticasPage() {
 
         const [resumenRes, catRes, mesRes, metodosRes, comerciosRes] =
           await Promise.all([
-            fetch(endPoints.reportes.resumen(id, mes, anio)),
-            fetch(endPoints.reportes.porCategoria(id, mes, anio)),
-            fetch(endPoints.reportes.porMes(id, anio)),
-            fetch(endPoints.reportes.porMetodoPago(id, mes, anio)),
-            fetch(endPoints.reportes.topComercios(id, mes, anio)),
+            authFetch(endPoints.reportes.resumen(id, mes, anio)),
+            authFetch(endPoints.reportes.porCategoria(id, mes, anio)),
+            authFetch(endPoints.reportes.porMes(id, anio)),
+            authFetch(endPoints.reportes.porMetodoPago(id, mes, anio)),
+            authFetch(endPoints.reportes.topComercios(id, mes, anio)),
           ]);
 
         console.log("resumen status:", resumenRes.status);

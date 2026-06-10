@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,7 @@ import com.example.ant_track_sboot.modelo.Gasto;
 import com.example.ant_track_sboot.servicio.GastoServicio;
 
 
-@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+
 @RestController
 @RequestMapping("/anttrackapi/v1/gastos")
 public class GastoControlador {

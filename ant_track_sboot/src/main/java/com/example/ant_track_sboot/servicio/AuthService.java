@@ -105,6 +105,8 @@ public class AuthService {
         
         // Login exitoso - crear respuesta
         LoginResponseDTO response = new LoginResponseDTO();
+        response.setId(usuario.getId());           
+        response.setNombre(usuario.getNombre()); 
         response.setIdentificacion(usuario.getDocumento());
         response.setCorreo(usuario.getCorreo());
         response.setRol(usuario.getRol().name());

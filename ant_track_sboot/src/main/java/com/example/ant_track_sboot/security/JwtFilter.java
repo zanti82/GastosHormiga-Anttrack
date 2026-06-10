@@ -80,7 +80,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                // 🔥 6. Guardar autenticación en Spring
+                //  6. Guardar autenticación en Spring
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
 
@@ -88,7 +88,7 @@ public class JwtFilter extends OncePerRequestFilter {
          System.out.println("Rol: " + correo);
         System.out.println("Authority: ROLE_" + correo);
 
-        // 🔹 7. Continuar filtro
+        // 7. Continuar filtro
         filterChain.doFilter(request, response);
     }
 }

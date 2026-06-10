@@ -22,3 +22,16 @@ export const clearSession = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
 };
+
+// ✅ fetch with token automatically added
+export const authFetch = (url, options = {}) => {
+  const token = getToken();
+  return fetch(url, {
+      ...options,
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+          ...options.headers,
+      }
+  });
+};

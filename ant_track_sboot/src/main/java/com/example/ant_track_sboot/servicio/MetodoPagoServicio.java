@@ -4,7 +4,7 @@ package com.example.ant_track_sboot.servicio;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,20 +17,15 @@ import com.example.ant_track_sboot.repositorio.IMetodoPagoRepositorio;
 @Service
 public class MetodoPagoServicio {
 
-    @Autowired // Inyección de dependencia del repositorio
-    private IMetodoPagoRepositorio repositorio;
+    // Inyección de dependencia del repositorio
+    private final IMetodoPagoRepositorio repositorio;
 
-    // Aquí puedes agregar métodos para manejar la lógica de negocio relacionada con
-    // los métodos de pago
-    // Servicio para guardar un nuevo método de pago
-    // Servicio para actualizar un método de pago existente
-    // Servicio para eliminar un método de pago por su ID
-    // Servicio para buscar un método de pago por su ID
-    // Servicio para listar todos los métodos de pago
 
-    // 1. GUARDAR un nuevo método de pago
-    // Aquí puedes agregar validaciones o lógica adicional antes de guardar el
-    // método de pago
+   public MetodoPagoServicio(IMetodoPagoRepositorio repositorio) {
+        this.repositorio = repositorio;
+    }
+
+   
 
     public MetodoPago guardar(MetodoPago metodoPago) {
         if (metodoPago.getDescripcion() == null || metodoPago.getDescripcion().isEmpty()) {

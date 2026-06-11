@@ -3,7 +3,7 @@ package com.example.ant_track_sboot.servicio;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,15 @@ import com.example.ant_track_sboot.repositorio.IUsuarioRepositorio;
 @Service
 public class UsuarioServicio {
 
-    @Autowired
-    private IUsuarioRepositorio usuarioRepositorio;
+    private final IUsuarioRepositorio usuarioRepositorio;
 
-    @Autowired
+    
     private PasswordEncoder passwordEncoder;
+
+    public UsuarioServicio(IUsuarioRepositorio usuarioRepositorio, PasswordEncoder passwordEncoder) {
+        this.usuarioRepositorio = usuarioRepositorio;
+        this.passwordEncoder =  passwordEncoder;
+    }
 
     // CREAR USUARIO
     public Usuario guardar_usuario(Usuario datos){

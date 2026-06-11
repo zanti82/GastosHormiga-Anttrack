@@ -32,44 +32,45 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
     
-                // ✅ CORS preflight
+                //  CORS preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
     
-                // ✅ public
+                //  public
                 .requestMatchers("/anttrackapi/v1/auth/login").permitAll()
                 .requestMatchers("/anttrackapi/v1/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/anttrackapi/v1/usuarios").permitAll()
     
-                // ✅ GASTOS — user and admin
+                //  GASTOS — user and admin
                 .requestMatchers("/anttrackapi/v1/gastos/**").hasAnyRole("ADMIN", "USER")
 
-                // ✅ reportes — user and admin
+                //  reportes — user and admin
                 .requestMatchers("/anttrackapi/v1/reportes/**").hasAnyRole("ADMIN", "USER")
     
-                // ✅ CATEGORIAS
+                //  CATEGORIAS
                 .requestMatchers(HttpMethod.GET, "/anttrackapi/v1/categorias/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/anttrackapi/v1/categorias/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/anttrackapi/v1/categorias/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/anttrackapi/v1/categorias/**").hasRole("ADMIN")
     
-                // ✅ COMERCIOS
+                //  COMERCIOS
                 .requestMatchers(HttpMethod.GET, "/anttrackapi/v1/comercios/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/anttrackapi/v1/comercios/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/anttrackapi/v1/comercios/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/anttrackapi/v1/comercios/**").hasRole("ADMIN")
     
-                // ✅ METODO PAGOS
+                //  METODO PAGOS
                 .requestMatchers(HttpMethod.GET, "/anttrackapi/v1/metodopagos/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/anttrackapi/v1/metodopagos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/anttrackapi/v1/metodopagos/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/anttrackapi/v1/metodopagos/**").hasRole("ADMIN")
     
-                // ✅ USUARIOS
+                //  USUARIOS
                 .requestMatchers(HttpMethod.GET, "/anttrackapi/v1/usuarios/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/anttrackapi/v1/usuarios/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/anttrackapi/v1/usuarios/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/anttrackapi/v1/usuarios/**").hasRole("ADMIN")
     
-                // ✅ DASHBOARD AND REPORTS
+                //  DASHBOARD AND REPORTS
                 .requestMatchers("/anttrackapi/v1/dashboard/**").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/anttrackapi/v1/reportes/**").hasAnyRole("ADMIN", "USER")
     
@@ -93,15 +94,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-       // 👇 read from environment variable
+       // read from environment variable
        String allowedOrigins = System.getenv("ALLOWED_ORIGINS");
 
-       // 👇 fallback to localhost if variable is missing
+       // fallback to localhost if variable is missing
            if (allowedOrigins == null || allowedOrigins.isEmpty()) {
                allowedOrigins = "http://localhost:5173";
            }
    
-       // 👇 split by comma so you can pass multiple origins
+       // split by comma so you can pass multiple origins
        List<String> origins = List.of(allowedOrigins.split(","));
 
        config.setAllowedOrigins(origins);

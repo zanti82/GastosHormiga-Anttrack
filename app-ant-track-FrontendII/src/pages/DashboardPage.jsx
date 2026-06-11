@@ -25,7 +25,7 @@ export default function DashboardPage() {
     valor: "",
     categoriaId: "",
     metodoPagoId: "",
-    comercioId: "",
+    comercioNombre: "",
     usuarioId: activeUser.id,
   });
 
@@ -52,14 +52,13 @@ export default function DashboardPage() {
 
   //PARA LISTAR coemrcios
   function getComercios() {
-    authFetch(`${endPoints.comercios}`) //traemos los gastos del uasuario id
+    authFetch(`${endPoints.comercios}/mis-comercios`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("comercios", data); //verificar si llega la data
         setComercios(data);
       })
-      .catch((error) => console.log("Error al cargar gastos:", error.message));
-  }
+      .catch((error) => console.log("Error al cargar comercios:", error.message));
+}
 
   //PARA LISTAR categorias
   function getCategorias() {
@@ -189,8 +188,8 @@ export default function DashboardPage() {
           gastoEditar.categoria?.id || parseInt(gastoEditar.categoriaId),
         metodoPagoId:
           gastoEditar.metodoPago?.id || parseInt(gastoEditar.metodoPagoId),
-        comercioId:
-          gastoEditar.comercio?.id || parseInt(gastoEditar.comercioId),
+        comercioNombre: 
+          gastoEditar.comercio?.nombreComercio || gastoEditar.comercioNombre,
         usuarioId: activeUser.id,
       };
 
@@ -245,7 +244,7 @@ export default function DashboardPage() {
         descripcion: gasto.descripcion,
         categoriaId: parseInt(gasto.categoriaId),
         metodoPagoId: parseInt(gasto.metodoPagoId),
-        comercioId: parseInt(gasto.comercioId),
+        comercioNombre: gasto.comercioNombre,
         usuarioId: activeUser.id,
       };
 
@@ -345,7 +344,7 @@ export default function DashboardPage() {
               onClick={() => {
                 setOpenModal(false);
                 setGastoEditar(null);
-                setGasto({ descripcion: "", valor: "", categoriaId: "", metodoPagoId: "", comercioId: "", usuarioId: activeUser.id });
+                setGasto({ descripcion: "", valor: "", categoriaId: "", metodoPagoId: "", comercioNombre: "", usuarioId: activeUser.id });
               }}
               className="absolute top-2 right-3 text-gray-500 hover:text-black text-lg font-bold"
             >
@@ -388,15 +387,21 @@ export default function DashboardPage() {
 
               <div className="mb-4">
                 <label className="block text-gray-600 mb-1">Comercio</label>
-                <select name="comercioId"
-                  value={gastoEditar ? gastoEditar.comercio.id : gasto.comercioId}
+                <input
+                  type="text"
+                  name="comercioNombre"
+                  value={gastoEditar ? gastoEditar.comercio?.nombreComercio || gastoEditar.comercioNombre || '' : gasto.comercioNombre}
                   onChange={handleChange}
-                  className="w-full border border-gray-300 rounded px-4 py-2 text-gray-600" required>
-                  <option value="">Selecciona un comercio</option>
+                  placeholder="Escribe el nombre del comercio..."
+                  className="w-full border border-gray-300 rounded px-4 py-2"
+                  list="comercios-list"
+                  required
+                />
+                <datalist id="comercios-list">
                   {comercios.map((item) => (
-                    <option key={item.id} value={item.id}>{item.nombreComercio}</option>
+                    <option key={item.id} value={item.nombreComercio} />
                   ))}
-                </select>
+                </datalist>
               </div>
 
               <div className="mb-6">
@@ -450,7 +455,7 @@ export default function DashboardPage() {
                     <td className="px-2 py-2 max-w-[100px] truncate">{g.descripcion}</td>
                     <td className="px-2 py-2 hidden sm:table-cell">{g.categoria.nombre}</td>
                     <td className="px-2 py-2 hidden md:table-cell">{g.metodoPago.descripcion}</td>
-                    <td className="px-2 py-2 hidden md:table-cell">{g.comercio.nombreComercio}</td>
+                    <td className="px-2 py-2 hidden md:table-cell">{g.comercio?.nombreComercio}</td>
                     <td className="px-2 py-2 text-right font-bold text-blue-600">${g.valor}</td>
                     <td className="px-2 py-2">
                       <div className="flex flex-col gap-1">

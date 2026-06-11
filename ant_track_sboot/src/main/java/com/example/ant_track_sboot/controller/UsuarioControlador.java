@@ -1,7 +1,7 @@
 package com.example.ant_track_sboot.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +14,12 @@ import com.example.ant_track_sboot.servicio.UsuarioServicio;
 @RequestMapping("/anttrackapi/v1/usuarios")
 public class UsuarioControlador {
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+    private final UsuarioServicio usuarioServicio;
+
+
+    public UsuarioControlador(UsuarioServicio usuarioServicio) {
+        this.usuarioServicio = usuarioServicio;
+    }
    
 
     // CREAR USUARIO

@@ -83,11 +83,11 @@ export default function ComerciosA() {
     };
 
     try {
-      const res = await fetch(`${endPoints.comercios}/${editando.id}`, {
+      const res = await authFetch(`${endPoints.comercios}/${comercioId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(actualizada),
-      });
+        body: JSON.stringify({ nombreComercio: "NuevoNombre" })
+    });
 
       if (res.ok) {
         Swal.fire({

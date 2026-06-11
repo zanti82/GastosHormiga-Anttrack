@@ -1,8 +1,11 @@
 package com.example.ant_track_sboot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ant_track_sboot.modelo.Comercio;
+import com.example.ant_track_sboot.modelo.Usuario;
 import com.example.ant_track_sboot.servicio.ComercioServicio;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,32 +22,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/anttrackapi/v1/comercios")
-
-
-
 public class ComercioControlador {
 
-       
-    //Se conecta con el servicio para realizar las operaciones de CRUD, se inyecta el servicio en el controlador para poder usarlo
-    //Se crean los endpoints para cada operación de CRUD, se pueden usar los métodos HTTP adecuados para cada operación, por ejemplo:       
-
-    //POST para crear un nuevo comercio
-    //GET para listar todos los comercios
-
-    @Autowired
+     
     private ComercioServicio comercioServicio;
 
-    //Para cada servicio ofrecido se debe programar una funcion
-    //Esa funcion recibira las peticiones del pedido y respondera con la información solicitada o con un mensaje de error en caso de que algo salga mal 
+    public ComercioControlador(ComercioServicio comercioServicio) {
+        this.comercioServicio = comercioServicio;
+    }
 
 
-    //Funcion controladora del servicio para guardar un nuevo comercio, esta funcion recibira una peticion POST con los datos del nuevo comercio, validara los datos y llamara al servicio para guardar el comercio en la base de datos, si todo sale bien se retornara el comercio guardado, si no se retornara un mensaje de error con el motivo del error
-    //Ejemplo de endpoint para guardar un nuevo comercio
 
+    
     @PostMapping
-    public ResponseEntity<?> controladorGuardar(@RequestBody Comercio datos) {
-        return ResponseEntity.status(HttpStatus.OK)
-        .body(comercioServicio.guardar_Comercio(datos));
+    public ResponseEntity<Comercio> crearComercio(
+            @RequestBody Comercio datos,
+            @AuthenticationPrincipal Usuario usuario) {
+        Comercio nuevo = comercioServicio.crearComercio(datos.getNombreComercio(), usuario);
+        return ResponseEntity.ok(nuevo);
     }
 
 
@@ -52,21 +48,21 @@ public class ComercioControlador {
     //Ejemplo de endpoint para listar todos los comercios
 
     
-     @GetMapping
-    public ResponseEntity<?> controladorListar() {
-        return ResponseEntity.status(HttpStatus.OK)
-        .body(comercioServicio.listar_comercios());
-        }
+    @GetMapping("/mis-comercios")
+    public ResponseEntity<List<Comercio>> listarMisComercios(@AuthenticationPrincipal Usuario usuario) {
+        return ResponseEntity.ok(comercioServicio.listarPorUsuario(usuario.getId()));
+    }
 
 
         //Funcion controladora del servicio para modificar un comercio, esta funcion recibira una peticion PUT con los datos del comercio a modificar, validara los datos y llamara al servicio para modificar el comercio en la base de datos, si todo sale bien se retornara el comercio modificado, si no se retornara un mensaje de error con el motivo del error
         
-        @PutMapping("/{id}")
-        public ResponseEntity<?> controladorModificar(@PathVariable Long id, @RequestBody Comercio datos) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                comercioServicio.modificar_comercio(id, datos)
-            );
-            
+    @PutMapping("/{id}")
+    public ResponseEntity<Comercio> updateComercio(
+        @PathVariable Long id,
+        @RequestBody Comercio request,
+        @AuthenticationPrincipal Usuario usuario) {
+    Comercio actualizado = comercioServicio.updateComercio(id, request.getNombreComercio(), usuario);
+    return ResponseEntity.ok(actualizado);
         }
 
         //Funcion controladora del servicio para eliminar un comercio, esta funcion recibira una peticion DELETE con el id del comercio a eliminar, validara el id y llamara al servicio para eliminar el comercio en la base de datos, si todo sale bien se retornara un mensaje indicando que el comercio fue eliminado, si no se retornara un mensaje de error con el motivo del error
@@ -74,7 +70,7 @@ public class ComercioControlador {
         @DeleteMapping("/{id}")
         public ResponseEntity<?> controladorEliminar(@PathVariable Long id) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                comercioServicio.eliminar_comercio(id)
+                comercioServicio.deleteComercio(id)
             );
         }
 
@@ -83,7 +79,7 @@ public class ComercioControlador {
         @GetMapping("/{id}")
         public ResponseEntity<?> controladorBuscar(@PathVariable Long id) {
             return ResponseEntity.status(HttpStatus.OK).body(
-                comercioServicio.buscar_comercio_id(id)
+                comercioServicio.searchComercioById(id)
             );
         }
 

@@ -2,7 +2,7 @@ package com.example.ant_track_sboot.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.ant_track_sboot.DTO.GastoDTO;
 import com.example.ant_track_sboot.modelo.Gasto;
+import com.example.ant_track_sboot.modelo.Usuario;
 import com.example.ant_track_sboot.servicio.GastoServicio;
 
 
@@ -26,17 +27,20 @@ public class GastoControlador {
 
     //inyectar el servivicio 
 
-    @Autowired
-    private GastoServicio gastoServicio;
+    private final GastoServicio gastoServicio;
+
+    public GastoControlador(GastoServicio gastoServicio) {
+        this.gastoServicio = gastoServicio;
+    }
 
     //para cada servicio se debe programar una funcion
     //esa funcion recibe peticiones y responde
 
    
     @PostMapping
-    public ResponseEntity<?> saveGasto(@RequestBody GastoDTO datos){
+    public ResponseEntity<?> saveGasto(@RequestBody GastoDTO datos, Usuario userId){
         return ResponseEntity.status(HttpStatus.OK).body(
-            gastoServicio.guardarGasto(datos)
+            gastoServicio.guardarGasto(datos, userId)
         );
     }
 

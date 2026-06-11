@@ -7,20 +7,20 @@ public class GastoDTO {
     public BigDecimal valor;
     public Long categoriaId;
     public Long metodoPagoId;
-    public Long comercioId;
+    public String comercioNombre;
     public Long usuarioId;
 
     
     public GastoDTO() {
     }
     
-    public GastoDTO(String descripcion, BigDecimal valor, Long categoriaId, Long metodoPagoId, Long comercioId,
+    public GastoDTO(String descripcion, BigDecimal valor, Long categoriaId, Long metodoPagoId, String comercioNombre,
             Long usuarioId) {
         this.descripcion = descripcion;
         this.valor = valor;
         this.categoriaId = categoriaId;
         this.metodoPagoId = metodoPagoId;
-        this.comercioId = comercioId;
+        this.comercioNombre = comercioNombre;
         this.usuarioId = usuarioId;
     }
     public String getDescripcion() {
@@ -47,11 +47,11 @@ public class GastoDTO {
     public void setMetodoPagoId(Long metodoPagoId) {
         this.metodoPagoId = metodoPagoId;
     }
-    public Long getComercioId() {
-        return comercioId;
+    public String getComercioNombre() {
+        return comercioNombre;
     }
-    public void setComercioId(Long comercioId) {
-        this.comercioId = comercioId;
+    public void setComercioNombre(String comercioNombre) {
+        this.comercioNombre = comercioNombre;
     }
     public Long getUsuarioId() {
         return usuarioId;

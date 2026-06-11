@@ -54,14 +54,20 @@ public class GastoServicio {
 
     //1. 1 guardar validadando gasto
 
-    public Gasto guardarGasto(GastoDTO dto){ 
+    public Gasto guardarGasto(GastoDTO dto, Usuario usuario){ 
 
          //parametros con ID para que haga la tabal solo con id, no con objetos
 
         Categoria categoria = categoriaServicio.buscarPorId(dto.categoriaId);
         MetodoPago metodoPago = metodoPagoServicio.buscarPorId(dto.metodoPagoId);
-        Comercio comercio = comercioServicio.buscar_comercio_id(dto.comercioId);
-        Usuario usuario = usuarioServicio.buscarPorId(dto.usuarioId);
+        usuario = usuarioServicio.buscarPorId(dto.usuarioId);
+        
+        Comercio comercio = comercioServicio.buscarPorNombreYUsuario(dto.getComercioNombre(), usuario.getId());
+
+        if (comercio == null) {
+            comercio = comercioServicio.crearComercio(dto.getComercioNombre(), usuario);
+        }
+       
 
         if(dto.getDescripcion() == null || dto.getDescripcion().isBlank() 
             || dto.getDescripcion().isEmpty() ){
@@ -138,7 +144,7 @@ public class GastoServicio {
 
         Categoria categoria = categoriaServicio.buscarPorId(dto.getCategoriaId());
         MetodoPago metodoPago = metodoPagoServicio.buscarPorId(dto.getMetodoPagoId());
-        Comercio comercio = comercioServicio.buscar_comercio_id(dto.getComercioId());
+        Comercio comercio = comercioServicio.buscarPorNombreYUsuario(dto.getComercioNombre(), dto.getUsuarioId());
     
         Gasto gastoEditado = gastoExistente.get();
 

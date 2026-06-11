@@ -1,6 +1,6 @@
 package com.example.ant_track_sboot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/anttrackapi/v1/categorias")
 public class CategoriaControlador {
 
-    @Autowired
-    private CategoriaServicio categoriaServicio;
+    private final CategoriaServicio categoriaServicio;
+
+    public CategoriaControlador(CategoriaServicio categoriaServicio) {
+        this.categoriaServicio = categoriaServicio;
+    }
 
     // Guardo para crear categorias
     @PostMapping

@@ -8,6 +8,7 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const [correo, setCorreo] = useState("");
     const [password, setPassword] = useState("");
+    console.log("API BASE:", import.meta.env.VITE_API_URL);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

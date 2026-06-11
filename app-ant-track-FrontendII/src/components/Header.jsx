@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
+import { Link } from "react-router-dom";  // ← add this import
 
 const Header = () => {
   return (
@@ -19,13 +20,7 @@ const Header = () => {
           dia a dia para que nunca pierdas el control de tu presupuesto.{" "}
         </h3>
         <div className="space-x-6 mt-16">
-          <a
-            href="login"
-            className="border border-white text-[20px] px-8 py-3 rounded transition-all duration-300
-                    hover:bg-white hover:text-blue-600"
-          >
-            Comenzar gratis
-          </a>
+          <Link to="/login">Comenzar gratis</Link>
           <a
             href="#Contacto"
             className="border border-white text-[20px] px-8 py-3 rounded transition-all duration-300
